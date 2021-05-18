@@ -1,6 +1,7 @@
 import Models.Account;
 import Models.Role;
 import Models.User;
+import Rubricae.MenuRubrica;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,15 +10,15 @@ import java.util.Scanner;
 
 public class ActionMap {
     Map<Role,ArrayList> mapp = new HashMap();
-    Role ruolo = new Role();
-    //MenuRubrica menu = new MenuRubrica();
+    //Role ruolo = new Role();
+    Rubricae.MenuRubrica menu = new Rubricae.MenuRubrica();
 
     public ActionMap() {
         ArrayList<Account> rubrica =  new ArrayList<Account>();
         rubrica.add(new Account(new User("Bendetto", "tosiani", "23"), "3312341300", "benedetto.tosiani@edu.unife.it"));
         rubrica.add(new Account(new User("Giorgio", "Vanni", "57"), "3339196342", ""));
         mapp.put(new Role("Admin", "Rubrica dell'amministratore, quella principale precaricatata"), rubrica);
-        mapp.put(new Role("Other", "Rubrica prova per test, precaricatata uguale alla prima"), rubrica);
+        mapp.put(new Role("Other", "Rubrica prova per test, precaricatata uguale alla prima"), new ArrayList<Account>());
     }
 
     public void opzioni(){
@@ -36,9 +37,42 @@ public class ActionMap {
     public void scelta(int n){
         switch (n){
             case 0:
-                System.out.println("Fine Esercizio");
+                System.out.println("Fine");
                 break;
             case 1:
+                System.out.println("Scegli su quale rubrica lavorare:");
+
+                int contr;
+                do {
+                    contr = controllo();
+                    if (contr <= mapp.size() && contr > 0)
+                        break;
+                    else{
+                        System.out.println("inserisci un valore tra 1 e " + mapp.size());
+                        contr = -1;
+                    }
+                } while (contr == -1);
+
+                int c = 1;
+                for (Role i : mapp.keySet()) {
+                    if (c == contr){
+                        int valore = 0;
+                        menu.setRubrica(mapp.get(i));
+                        do {
+                            menu.opzioniRubrica();
+                            do {
+                                valore = controllo();
+                            } while (valore == -1);
+                            ArrayList<Account> array = new ArrayList<Account>();
+                            array.addAll(menu.scelta(valore));
+                            if (valore == 0) {
+                                mapp.put(i,array);
+                                break;
+                            }
+                        } while (true);
+                    }
+                    c++;
+                }
                 break;
             case 2:
                 nuovaRubrica();
@@ -132,16 +166,17 @@ public class ActionMap {
     }
 
     public void print(Map<Role,ArrayList> st){
+        int pos = 1;
         for(Role i: st.keySet()){
-            System.out.println(" Nome: " + i.getType());
+            System.out.println(" "+ pos +") Nome: " + i.getType());
             System.out.println(" Uid: " + i.getUid());
             System.out.println(" Descrizione: " + i.getDescription());
+            pos++;
             System.out.println();
         }
     }
 
     public void printRubriche(){
-        MenuRubrica menu = new MenuRubrica();
         for(Role i: mapp.keySet()) {
             menu.printArray(mapp.get(i));
         }

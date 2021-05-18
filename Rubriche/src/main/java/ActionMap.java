@@ -1,12 +1,13 @@
 import Models.Account;
+import Models.MapModel;
 import Models.Role;
 import Models.User;
+import MyFile.MyFile;
 import Rubricae.MenuRubrica;
+import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.io.File;
+import java.util.*;
 
 public class ActionMap {
     Map<Role,ArrayList> mapp = new HashMap();
@@ -32,6 +33,8 @@ public class ActionMap {
         System.out.println(" 5) Stampa tutte le rubriche");
         System.out.println(" 6) Cancella tutte le rubriche");
         System.out.println(" 7) Stampa il contenuto di tutte le rubriche");
+        System.out.println(" 8) import json mappa rubrica da file");
+        System.out.println(" 9) export json mappa rubrica da file");
     }
 
     public void scelta(int n){
@@ -99,6 +102,10 @@ public class ActionMap {
             case 7:
                 System.out.println("Contatti:");
                 printRubriche();
+                break;
+            case 8: inportHashmap();
+                break;
+            case 9: exportHashmap();
                 break;
             default:
                 System.out.println("Scelta non valida");;
@@ -178,6 +185,7 @@ public class ActionMap {
 
     public void printRubriche(){
         for(Role i: mapp.keySet()) {
+            System.out.println();
             menu.printArray(mapp.get(i));
         }
     }
@@ -195,5 +203,40 @@ public class ActionMap {
 
     public void svuotaTutto(){
         mapp.clear();
+    }
+
+    public void inportHashmap(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("scrivi il nome del file su cui salvare le rubriche");
+        String json = MyFile.readFile(File.separator + "Map" + File.separator + scan.next());
+        ArrayList<MapModel> mapList = new ArrayList<MapModel>(Arrays.asList(new Gson().fromJson(json, MapModel[].class)));
+        for(MapModel i: mapList){
+            mapp.put(i.getRuolo(),i.getRubrica());
+        }
+    }
+
+    public void exportHashmap(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("scrivi il nome del file su cui salvare le rubriche");
+        ArrayList<MapModel> mapList = new ArrayList<MapModel>();
+        int n = 0;
+        for(Role i: mapp.keySet()){
+            ArrayList<Account> arr =  new ArrayList<Account>();
+            MapModel mapMod = new MapModel();
+            Role role = new Role();
+
+            arr.addAll(mapp.get(i));
+
+            role.setType(i.getType());
+            role.setDescription(i.getDescription());
+            role.setId(i.getUid());
+
+            mapMod.setRuolo(role);
+            mapMod.setRubrica(arr);
+
+            mapList.add(n, mapMod);
+            n++;
+        }
+        MyFile.writeFile((File.separator + "Map" + File.separator + scan.next()), new Gson().toJson(mapList));
     }
 }

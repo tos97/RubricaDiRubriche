@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class MyFile {
 
-    public static String BASE_PATH = "C:\\Users\\rober\\Documents\\GitHub\\Rubrica\\RubricaArrayList\\src\\main";
+    public static String BASE_PATH = "C:\\Users\\rober\\Documents\\GitHub\\RubricaDiRubriche\\Rubriche\\src\\main";
     public static String RESOURCES_PATH = BASE_PATH + File.separator + "resources";
     public static String EXIT_JSON = ".json";
 

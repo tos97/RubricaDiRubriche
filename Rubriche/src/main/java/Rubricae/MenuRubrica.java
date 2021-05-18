@@ -5,6 +5,7 @@ import Models.User;
 import MyFile.MyFile;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -243,12 +244,12 @@ public class MenuRubrica {
     public void importJsonFile(){
         Scanner scan = new Scanner(System.in);
         System.out.println("scrivi il nome del file dai cui prelevare la rubrica");
-        rubrica.addAll(Arrays.asList(new Gson().fromJson(MyFile.readFile(scan.next()), Account[].class)));
+        rubrica.addAll(Arrays.asList(new Gson().fromJson(MyFile.readFile((File.separator + "Rub" + File.separator + scan.next())), Account[].class)));
     }
 
     public void exportJsonFile(String nomeRubrica){
         String nome = "backup" + nomeRubrica;
         System.out.println("Il nome del file su cui salvare la rubrica è "+nome);
-        MyFile.writeFile(nome,exportJson(nome));
+        MyFile.writeFile((File.separator + "Rub" + File.separator + nome),exportJson(nome));
     }
 }

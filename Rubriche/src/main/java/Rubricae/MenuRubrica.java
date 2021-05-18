@@ -2,8 +2,11 @@ package Rubricae;
 
 import Models.Account;
 import Models.User;
+import MyFile.MyFile;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class MenuRubrica {
@@ -28,19 +31,19 @@ public class MenuRubrica {
         return rub.size();
     }
 
-    public void opzioniRubrica(){
-        System.out.println("\nMenu Rubrica(arrayList)\n " +
+    public void opzioniRubrica(String nomeRubrica){
+        System.out.println("\nMenu Rubrica "+ nomeRubrica +"\n " +
                 "0) Menu Rubriche(Map)\n 1) Add\n 2) Delete\n " +
                 "3) Update\n 4) Search\n 5) Print All\n " +
                 "6) Delete All\n 7) Salva tramite json\n " +
                 "8) print All in Json\n " +
-                "9) Import Json da File()\n 10) Export in file");
+                "9) Import Json da File\n 10) Export in file");
     }
 
-    public ArrayList<Account> scelta(int n){
+    public ArrayList<Account> scelta(int n,String nomeRubrica){
         switch (n) {
             case 0:
-                System.out.println("Arrivederci");
+                System.out.println("Arrivederci " + nomeRubrica);
                 return rubrica;
             case 1: aggiungi();break;
             case 2:
@@ -69,10 +72,10 @@ public class MenuRubrica {
                 break;
             case 5: printArray(rubrica);break;
             case 6: clear();break;
-            case 7: break; //importJson();
-            case 8: break; //exportJson();
-            case 9: break; //importJsonFile();
-            case 10: break; //exportJsonFile();
+            case 7: importJson(); break; //importJson();
+            case 8: exportJson(); break; //exportJson();
+            case 9: importJsonFile(); break; //importJsonFile();
+            case 10: exportJsonFile(nomeRubrica); break; //exportJsonFile();
             default: System.out.println("ERRORE inserire un numero tra 0 a 10");
         }
         return rubrica;
@@ -119,7 +122,7 @@ public class MenuRubrica {
         }
         if (getSize(temp) > 1) {
             System.out.println("Troppi elementi trovati a questa ricerca si più specifico");
-            System.out.println("controlla tra questi elementi trovati ed inserisci uid dell'elemento da cancellare");
+            System.out.println("controlla tra questi elementi trovati ed inserisci un elemento univoco del contatto come l'uid dell'elemento da  cancellare");
             printArray(temp);
             s = scan.next();
             canc(s);
@@ -144,7 +147,7 @@ public class MenuRubrica {
             System.err.println("ATTENZIONE\nNessun contatto con questo nome trovato");
         if (getSize(temp) > 1) {
             System.out.println("Troppi elementi trovati a questa ricerca si più specifico");
-            System.out.println("controlla tra questi elementi trovati ed inserisci uid dell'elemento da cancellare");
+            System.out.println("controlla tra questi elementi trovati ed inserisci un elemento univoco del contatto come l'uid dell'elemento da modificare");
             printArray(temp);
             s = scan.next();
             modifica(s);
@@ -220,5 +223,32 @@ public class MenuRubrica {
 
     public void clear() {
         rubrica.clear();
+    }
+
+    public void importJson(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Inserisci il json da salvare:");
+        String json = scanner.next();
+        rubrica.addAll(Arrays.asList(new Gson().fromJson(json, Account[].class)));
+    }
+
+    public void exportJson(){
+        System.out.println(new Gson().toJson(rubrica));
+    }
+
+    public String exportJson(String nome){
+        return new Gson().toJson(rubrica).toString();
+    }
+
+    public void importJsonFile(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("scrivi il nome del file dai cui prelevare la rubrica");
+        rubrica.addAll(Arrays.asList(new Gson().fromJson(MyFile.readFile(scan.next()), Account[].class)));
+    }
+
+    public void exportJsonFile(String nomeRubrica){
+        String nome = "backup" + nomeRubrica;
+        System.out.println("Il nome del file su cui salvare la rubrica è "+nome);
+        MyFile.writeFile(nome,exportJson(nome));
     }
 }

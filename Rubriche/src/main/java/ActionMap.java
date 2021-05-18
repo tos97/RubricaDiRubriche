@@ -17,8 +17,8 @@ public class ActionMap {
         ArrayList<Account> rubrica =  new ArrayList<Account>();
         rubrica.add(new Account(new User("Bendetto", "tosiani", "23"), "3312341300", "benedetto.tosiani@edu.unife.it"));
         rubrica.add(new Account(new User("Giorgio", "Vanni", "57"), "3339196342", ""));
-        mapp.put(new Role("Admin", "Rubrica dell'amministratore, quella principale precaricatata"), rubrica);
         mapp.put(new Role("Other", "Rubrica prova per test, precaricatata uguale alla prima"), new ArrayList<Account>());
+        mapp.put(new Role("Admin", "Rubrica dell'amministratore, quella principale precaricatata"), rubrica);
     }
 
     public void opzioni(){
@@ -40,8 +40,8 @@ public class ActionMap {
                 System.out.println("Fine");
                 break;
             case 1:
-                System.out.println("Scegli su quale rubrica lavorare:");
-
+                print(mapp);
+                System.out.println("Scegli su quale rubrica lavorare (inserire la posizione della rubrica voluta):");
                 int contr;
                 do {
                     contr = controllo();
@@ -59,12 +59,12 @@ public class ActionMap {
                         int valore = 0;
                         menu.setRubrica(mapp.get(i));
                         do {
-                            menu.opzioniRubrica();
+                            menu.opzioniRubrica(i.getType());
                             do {
                                 valore = controllo();
                             } while (valore == -1);
                             ArrayList<Account> array = new ArrayList<Account>();
-                            array.addAll(menu.scelta(valore));
+                            array.addAll(menu.scelta(valore,i.getType()));
                             if (valore == 0) {
                                 mapp.put(i,array);
                                 break;

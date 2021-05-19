@@ -52,7 +52,7 @@ public class MyFile {
         }
     }
 
-    public static void deleteFile(String fileNome){
+    /*public static void deleteFile(String fileNome){
         String path = RESOURCES_PATH + File.separator + fileNome + EXIT_JSON;
         File file = new File(path);
         if (file.delete())
@@ -60,21 +60,43 @@ public class MyFile {
         else{
             System.out.println("il file "+ path +" non può essere cancellato");
         }
-    }
+    }*/
 
-    public static void deleteFile(String dirPath, boolean all){
-        String path = RESOURCES_PATH + File.separator + dirPath;
-        if(all)
-            for (File filetmp: new File(path).listFiles()) {
-                if (filetmp.delete())
-                    System.out.println("il file " + filetmp.getName() + " è stato cancellato");
-                else {
-                    System.out.println("Errore nel cancellare i file in " + path);
+    public static void deleteFile(String nomePath, boolean all, String ext){
+        if(all) {
+            String path = RESOURCES_PATH + File.separator + nomePath;
+            if(ext.length() == 0) {
+                for (File filetmp : new File(path).listFiles()) {
+                    if (filetmp.delete())
+                        System.out.println("il file " + filetmp.getName() + " è stato cancellato");
+                    else {
+                        System.out.println("Errore nel cancellare i file in " + path);
+                    }
                 }
             }
+            else{
+                for (File filetmp: new File(path).listFiles()) {
+                    if(filetmp.getName().contains(ext))
+                        if (filetmp.delete())
+                            System.out.println("il file " + filetmp.getName() + " è stato cancellato");
+                        else {
+                            System.out.println("Errore nel cancellare i file in " + path);
+                        }
+                }
+            }
+        }
+        else{
+            String path = RESOURCES_PATH + File.separator + nomePath + "." + ext;
+            File file = new File(path);
+            if (file.delete())
+                System.out.println("il file "+ path +" è stato cancellato");
+            else{
+                System.out.println("il file "+ path +" non può essere cancellato");
+            }
+        }
     }
 
-    public static void deleteFile(String dirPath, String ext){
+    /*public static void deleteFile(String dirPath, String ext){
         String path = RESOURCES_PATH + File.separator + dirPath;
         File file = new File(path);
         if(!file.exists())
@@ -90,5 +112,5 @@ public class MyFile {
             }
         }
 
-    }
+    }*/
 }

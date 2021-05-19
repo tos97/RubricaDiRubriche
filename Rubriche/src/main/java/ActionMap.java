@@ -5,6 +5,7 @@ import Models.User;
 import MyFile.MyFile;
 import Rubricae.MenuRubrica;
 import com.google.gson.Gson;
+import com.sun.org.omg.CORBA.StructMemberSeqHelper;
 
 import java.io.File;
 import java.util.*;
@@ -134,16 +135,16 @@ public class ActionMap {
                     switch (scInt.nextInt()) {
                         case 1:
                             System.out.print("scrivi il nome del file da cancellare: ");
-                            MyFile.deleteFile((File.separator + path + File.separator + scann.next()));
+                            MyFile.deleteFile((File.separator + path + File.separator + scann.next()), false, "json");
                             bol = true;
                             break;
                         case 2:
-                            MyFile.deleteFile((File.separator + path), true);
+                            MyFile.deleteFile((File.separator + path), true, "");
                             bol = true;
                             break;
                         case 3:
                             System.out.print("Inserisci estensione da cancellare: ");
-                            MyFile.deleteFile((File.separator + path), scann.next());
+                            MyFile.deleteFile((File.separator + path), true, scann.next());
                             bol = true;
                             break;
                         default:

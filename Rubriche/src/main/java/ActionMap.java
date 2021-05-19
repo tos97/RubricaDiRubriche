@@ -35,6 +35,7 @@ public class ActionMap {
         System.out.println(" 7) Stampa il contenuto di tutte le rubriche");
         System.out.println(" 8) import json mappa rubrica da file");
         System.out.println(" 9) export json mappa rubrica da file");
+        System.out.println(" 10) Delete file");
     }
 
     public void scelta(int n){
@@ -106,6 +107,49 @@ public class ActionMap {
             case 8: inportHashmap();
                 break;
             case 9: exportHashmap();
+                break;
+            case 10:
+                Scanner scann = new Scanner(System.in);
+                Scanner scInt = new Scanner(System.in);
+                boolean bol = false;
+                String path = "Map";
+                System.out.print("scegli la cartella in cui entrare (1-Map, 2-Rub): ");
+                do {
+                    switch (scInt.nextInt()) {
+                        case 1:
+                            path = "Map";
+                            bol = true;
+                            break;
+                        case 2:
+                            path = "Rub";
+                            bol = true;
+                            break;
+                        default:
+                            System.out.println("Sei fuori range");
+                    }
+                }while (!bol);
+                System.out.println("Voi cancellare:\n 1) Un file specifico\n 2) Tutti i file\n 3) File con una estensione");
+                bol = false;
+                do {
+                    switch (scInt.nextInt()) {
+                        case 1:
+                            System.out.print("scrivi il nome del file da cancellare: ");
+                            MyFile.deleteFile((File.separator + path + File.separator + scann.next()));
+                            bol = true;
+                            break;
+                        case 2:
+                            MyFile.deleteFile((File.separator + path), true);
+                            bol = true;
+                            break;
+                        case 3:
+                            System.out.print("Inserisci estensione da cancellare: ");
+                            MyFile.deleteFile((File.separator + path), scann.next());
+                            bol = true;
+                            break;
+                        default:
+                            System.out.println("Sei fuori range");
+                    }
+                }while (!bol);
                 break;
             default:
                 System.out.println("Scelta non valida");;

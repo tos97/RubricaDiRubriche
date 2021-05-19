@@ -49,10 +49,10 @@ public class ActionMap {
                 int contr;
                 do {
                     contr = controllo();
-                    if (contr <= mapp.size() && contr > 0)
+                    if (contr <= mapp.size() && contr >= 0)
                         break;
                     else{
-                        System.out.println("inserisci un valore tra 1 e " + mapp.size());
+                        System.out.println("inserisci un valore tra 1 e " + mapp.size() + "se non ci sono rubriche 0 per escape");
                         contr = -1;
                     }
                 } while (contr == -1);

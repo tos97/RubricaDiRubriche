@@ -32,7 +32,7 @@ public class Run {
                         action.exportHashmap(argv[i+1]);
                         break;
                     case "-h":
-                        System.out.println("HELP:\nBenvenuto in questa rubrica ecco alcune info:");
+                        System.out.println("\nHELP:\nBenvenuto in questa rubrica ecco alcune info:");
                         System.out.println("Questa rubrica serve per salvare i contatti di vari utenti diversi");
                         System.out.println("Qui troverai già alcuni esempi gia salvati nell'utente Admin c'è anche la possibilità di inportare tramite json backup di rubriche");
                         System.out.println("sia passando il loro nome come argomento sia passandolo tramite tastiera durante l'esecuzione");

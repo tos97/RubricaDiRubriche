@@ -259,8 +259,8 @@ public class ActionMap {
             } else {
                 System.out.println("scrivi il nome del file su cui salvare le rubriche");
                 inport(new Scanner(System.in).next());
-                System.out.println("Inportato correttamente " + nome);
             }
+            System.out.println("\nInportato correttamente " + nome);
         }
     }
 
@@ -278,8 +278,8 @@ public class ActionMap {
         } else {
             System.out.println("scrivi il nome del file su cui salvare le rubriche");
             export(new Scanner(System.in).next());
-            System.out.println("Exportato correttamente " + nome);
         }
+        System.out.println("\nExportato correttamente " + nome);
     }
 
     public void export(String nome){

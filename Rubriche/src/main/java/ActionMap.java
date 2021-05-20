@@ -273,6 +273,8 @@ public class ActionMap {
     }
 
     public void exportHashmap(String nome){
+        if (MyFile.existFile(File.separator + "Map" + File.separator + nome))
+            MyFile.deleteFile((File.separator + "Map" + File.separator + nome), false, "json");
         if (nome.length() > 0) {
             inport(nome);
         } else {

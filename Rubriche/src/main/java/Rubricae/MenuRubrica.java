@@ -241,15 +241,26 @@ public class MenuRubrica {
         return new Gson().toJson(rubrica).toString();
     }
 
-    public void importJsonFile(){
+    public void importJsonFile() {
         Scanner scan = new Scanner(System.in);
         System.out.println("scrivi il nome del file dai cui prelevare la rubrica");
-        rubrica.addAll(Arrays.asList(new Gson().fromJson(MyFile.readFile((File.separator + "Rub" + File.separator + scan.next())), Account[].class)));
+        boolean bol;
+        do {
+            String nome = scan.next();
+            bol = MyFile.existFile(File.separator + "Rub" + File.separator + nome);
+            if (!bol)
+                System.out.println("Il file " + nome + " non esiste.\nControlla meglio!\n");
+            else {
+                rubrica.addAll(Arrays.asList(new Gson().fromJson(MyFile.readFile((File.separator + "Rub" + File.separator + nome)), Account[].class)));
+            }
+        } while (!bol);
     }
 
     public void exportJsonFile(String nomeRubrica){
         String nome = "backup" + nomeRubrica;
         System.out.println("Il nome del file su cui salvare la rubrica è "+nome);
+        if (MyFile.existFile(File.separator + "Map" + File.separator + nome))
+            MyFile.deleteFile((File.separator + "Rub" + File.separator + nome), false, "json");
         MyFile.writeFile((File.separator + "Rub" + File.separator + nome),exportJson(nome));
     }
 }

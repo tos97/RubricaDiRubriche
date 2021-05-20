@@ -1,26 +1,22 @@
 import Models.Account;
 import Models.MapModel;
 import Models.Role;
-import Models.User;
 import MyFile.MyFile;
-import Rubricae.MenuRubrica;
 import com.google.gson.Gson;
-import com.sun.org.omg.CORBA.StructMemberSeqHelper;
 
 import java.io.File;
 import java.util.*;
 
 public class ActionMap {
     Map<Role,ArrayList> mapp = new HashMap();
-    //Role ruolo = new Role();
     Rubricae.MenuRubrica menu = new Rubricae.MenuRubrica();
 
     public ActionMap() {
-        ArrayList<Account> rubrica =  new ArrayList<Account>();
-        rubrica.add(new Account(new User("Bendetto", "tosiani", "23"), "3312341300", "benedetto.tosiani@edu.unife.it"));
-        rubrica.add(new Account(new User("Giorgio", "Vanni", "57"), "3339196342", ""));
-        mapp.put(new Role("Other", "Rubrica prova per test, precaricatata uguale alla prima"), new ArrayList<Account>());
-        mapp.put(new Role("Admin", "Rubrica dell'amministratore, quella principale precaricatata"), rubrica);
+        //ArrayList<Account> rubrica =  new ArrayList<Account>();
+        //rubrica.add(new Account(new User("Bendetto", "tosiani", "23"), "3312341300", "benedetto.tosiani@edu.unife.it"));
+        //rubrica.add(new Account(new User("Giorgio", "Vanni", "57"), "3339196342", ""));
+        //mapp.put(new Role("Other", "Rubrica prova per test, precaricatata uguale alla prima"), new ArrayList<Account>());
+        //mapp.put(new Role("Admin", "Rubrica dell'amministratore, quella principale precaricatata"), rubrica);
     }
 
     public void opzioni(){
@@ -35,7 +31,7 @@ public class ActionMap {
         System.out.println(" 6) Cancella tutte le rubriche");
         System.out.println(" 7) Stampa il contenuto di tutte le rubriche");
         System.out.println(" 8) import json mappa rubrica da file");
-        System.out.println(" 9) export json mappa rubrica da file");
+        System.out.println(" 9) export json mappa rubrica su file");
         System.out.println(" 10) Delete file");
     }
 

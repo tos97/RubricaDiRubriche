@@ -105,9 +105,9 @@ public class ActionMap {
                 System.out.println("Contatti:");
                 printRubriche();
                 break;
-            case 8: inportHashmap();
+            case 8: inportHashmap("");
                 break;
-            case 9: exportHashmap();
+            case 9: exportHashmap("");
                 break;
             case 10:
                 Scanner scann = new Scanner(System.in);
@@ -250,23 +250,43 @@ public class ActionMap {
         mapp.clear();
     }
 
-    public void inportHashmap(){
-        Scanner scan = new Scanner(System.in);
-        System.out.println("scrivi il nome del file su cui salvare le rubriche");
-        String json = MyFile.readFile(File.separator + "Map" + File.separator + scan.next());
-        ArrayList<MapModel> mapList = new ArrayList<MapModel>(Arrays.asList(new Gson().fromJson(json, MapModel[].class)));
+    public void inportHashmap(String nome){
+        if (!MyFile.existFile(File.separator + "Map" + File.separator + nome))
+            System.out.println("Il file "+ nome +" non esiste.\nControlla meglio!\n");
+        else {
+            if (nome.length() > 0) {
+                inport(nome);
+            } else {
+                System.out.println("scrivi il nome del file su cui salvare le rubriche");
+                inport(new Scanner(System.in).next());
+                System.out.println("Inportato correttamente " + nome);
+            }
+        }
+    }
+
+    public void inport(String nome){
+        String json = MyFile.readFile(File.separator + "Map" + File.separator + nome);
+        ArrayList<MapModel> mapList = new ArrayList<>(Arrays.asList(new Gson().fromJson(json, MapModel[].class)));
         for(MapModel i: mapList){
             mapp.put(i.getRuolo(),i.getRubrica());
         }
     }
 
-    public void exportHashmap(){
-        Scanner scan = new Scanner(System.in);
-        System.out.println("scrivi il nome del file su cui salvare le rubriche");
-        ArrayList<MapModel> mapList = new ArrayList<MapModel>();
+    public void exportHashmap(String nome){
+        if (nome.length() > 0) {
+            inport(nome);
+        } else {
+            System.out.println("scrivi il nome del file su cui salvare le rubriche");
+            export(new Scanner(System.in).next());
+            System.out.println("Exportato correttamente " + nome);
+        }
+    }
+
+    public void export(String nome){
+        ArrayList<MapModel> mapList = new ArrayList<>();
         int n = 0;
         for(Role i: mapp.keySet()){
-            ArrayList<Account> arr =  new ArrayList<Account>();
+            ArrayList<Account> arr =  new ArrayList<>();
             MapModel mapMod = new MapModel();
             Role role = new Role();
 
@@ -282,6 +302,6 @@ public class ActionMap {
             mapList.add(n, mapMod);
             n++;
         }
-        MyFile.writeFile((File.separator + "Map" + File.separator + scan.next()), new Gson().toJson(mapList));
+        MyFile.writeFile((File.separator + "Map" + File.separator + nome), new Gson().toJson(mapList));
     }
 }

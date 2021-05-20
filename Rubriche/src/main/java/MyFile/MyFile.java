@@ -11,6 +11,13 @@ public class MyFile {
     public static String RESOURCES_PATH = BASE_PATH + File.separator + "resources";
     public static String EXIT_JSON = ".json";
 
+    public static boolean existFile(String fileNome){
+        String path = RESOURCES_PATH + File.separator + fileNome + EXIT_JSON;
+        File file = new File(path);
+        if(!file.exists())
+            return false;
+        return true;
+    }
 
     public static String readFile(String fileNome){
         String bofyFile = "";

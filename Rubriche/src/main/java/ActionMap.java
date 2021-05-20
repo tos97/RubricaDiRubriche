@@ -227,6 +227,7 @@ public class ActionMap {
     public void printRubriche(){
         for(Role i: mapp.keySet()) {
             System.out.println();
+            System.out.println("Rubrica "+i.getType() +":");
             menu.printArray(mapp.get(i));
         }
     }

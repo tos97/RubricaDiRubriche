@@ -8,6 +8,11 @@ public class MapModel {
 
     public MapModel() { }
 
+    public MapModel(Role ruolo, ArrayList<Account> rubrica) {
+        this.ruolo = ruolo;
+        this.rubrica = rubrica;
+    }
+
     public Role getRuolo() {
         return ruolo;
     }

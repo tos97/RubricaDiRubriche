@@ -282,23 +282,8 @@ public class ActionMap {
 
     public void export(String nome){
         ArrayList<MapModel> mapList = new ArrayList<>();
-        int n = 0;
         for(Role i: mapp.keySet()){
-            ArrayList<Account> arr =  new ArrayList<>();
-            MapModel mapMod = new MapModel();
-            Role role = new Role();
-
-            arr.addAll(mapp.get(i));
-
-            role.setType(i.getType());
-            role.setDescription(i.getDescription());
-            role.setId(i.getUid());
-
-            mapMod.setRuolo(role);
-            mapMod.setRubrica(arr);
-
-            mapList.add(n, mapMod);
-            n++;
+            mapList.add(new MapModel(new Role(i.getType(),i.getDescription(),i.getUid()),mapp.get(i)));
         }
         MyFile.writeFile((File.separator + "Map" + File.separator + nome), new Gson().toJson(mapList));
     }

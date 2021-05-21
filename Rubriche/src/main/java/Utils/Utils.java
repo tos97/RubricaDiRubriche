@@ -1,15 +1,12 @@
-package MyFile;
+package Utils;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.Properties;
 
-public class MyFile {
+import static Utils.GlobalParameters.*;
 
-    public static String BASE_PATH = "C:\\Users\\rober\\Documents\\GitHub\\RubricaDiRubriche\\Rubriche\\src\\main";
-    public static String RESOURCES_PATH = BASE_PATH + File.separator + "resources";
-    public static String EXIT_JSON = ".json";
+public class Utils {
+
 
     public static boolean existFile(String fileNome){
         String path = RESOURCES_PATH + File.separator + fileNome + EXIT_JSON;
@@ -120,4 +117,14 @@ public class MyFile {
         }
 
     }*/
+
+    public static Properties loadProp(String propNome){
+        Properties properties = new Properties();
+        try{
+            properties.load(new FileInputStream(PROPERTIES_PATH + File.separator + propNome + EXIT_PROPERTIES));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return properties;
+    }
 }

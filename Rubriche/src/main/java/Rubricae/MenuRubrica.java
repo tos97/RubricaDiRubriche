@@ -2,13 +2,15 @@ package Rubricae;
 
 import Models.Account;
 import Models.User;
-import MyFile.MyFile;
+import Utils.Utils;
 import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+
+import static Utils.GlobalParameters.*;
 
 public class MenuRubrica {
 
@@ -108,7 +110,7 @@ public class MenuRubrica {
 
     public ArrayList<Account> addList(String n, String c, String a, String e, String t) {
         ArrayList<Account> app = new ArrayList<Account>();
-        app.add(new Account(new User(n, c, a), t, e));
+        app.add(new Account(new User(n, c, a), e, t));
         return app;
     }
 
@@ -247,11 +249,12 @@ public class MenuRubrica {
         boolean bol;
         do {
             String nome = scan.next();
-            bol = MyFile.existFile(File.separator + "Rub" + File.separator + nome);
+            bol = Utils.existFile(RUB_PATH + File.separator + nome);
             if (!bol)
                 System.out.println("Il file " + nome + " non esiste.\nControlla meglio!\n");
             else {
-                rubrica.addAll(Arrays.asList(new Gson().fromJson(MyFile.readFile((File.separator + "Rub" + File.separator + nome)), Account[].class)));
+                rubrica.addAll(Arrays.asList(new Gson().fromJson(Utils.readFile((File.separator + "Rub" + File.separator + nome)), Account[].class)));
+                System.out.println("importato correttamente");
             }
         } while (!bol);
     }
@@ -259,8 +262,8 @@ public class MenuRubrica {
     public void exportJsonFile(String nomeRubrica){
         String nome = "backup" + nomeRubrica;
         System.out.println("Il nome del file su cui salvare la rubrica è "+nome);
-        if (MyFile.existFile(File.separator + "Map" + File.separator + nome))
-            MyFile.deleteFile((File.separator + "Rub" + File.separator + nome), false, "json");
-        MyFile.writeFile((File.separator + "Rub" + File.separator + nome),exportJson(nome));
+        if (Utils.existFile(RUB_PATH + File.separator + nome))
+            Utils.deleteFile((RUB_PATH + File.separator + nome), false, "json");
+        Utils.writeFile((RUB_PATH + File.separator + nome),exportJson(nome));
     }
 }

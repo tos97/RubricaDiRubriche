@@ -1,11 +1,13 @@
 import Models.Account;
 import Models.MapModel;
 import Models.Role;
-import MyFile.MyFile;
+import Utils.Utils;
 import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.*;
+
+import static Utils.GlobalParameters.*;
 
 public class ActionMap {
     Map<Role,ArrayList> mapp = new HashMap();
@@ -112,7 +114,7 @@ public class ActionMap {
                 String path = "Map";
                 System.out.print("scegli la cartella in cui entrare (1-Map, 2-Rub): ");
                 do {
-                    switch (scInt.nextInt()) {
+                    switch (controllo()) {
                         case 1:
                             path = "Map";
                             bol = true;
@@ -128,19 +130,19 @@ public class ActionMap {
                 System.out.println("Voi cancellare:\n 1) Un file specifico\n 2) Tutti i file\n 3) File con una estensione");
                 bol = false;
                 do {
-                    switch (scInt.nextInt()) {
+                    switch (controllo()) {
                         case 1:
                             System.out.print("scrivi il nome del file da cancellare: ");
-                            MyFile.deleteFile((File.separator + path + File.separator + scann.next()), false, "json");
+                            Utils.deleteFile((File.separator + path + File.separator + scann.next()), false, "json");
                             bol = true;
                             break;
                         case 2:
-                            MyFile.deleteFile((File.separator + path), true, "");
+                            Utils.deleteFile((File.separator + path), true, "");
                             bol = true;
                             break;
                         case 3:
                             System.out.print("Inserisci estensione da cancellare: ");
-                            MyFile.deleteFile((File.separator + path), true, scann.next());
+                            Utils.deleteFile((File.separator + path), true, scann.next());
                             bol = true;
                             break;
                         default:
@@ -248,21 +250,28 @@ public class ActionMap {
     }
 
     public void inportHashmap(String nome){
-        if (!MyFile.existFile(File.separator + "Map" + File.separator + nome))
-            System.out.println("Il file "+ nome +" non esiste.\nControlla meglio!\n");
-        else {
-            if (nome.length() > 0) {
+
+        if (nome.length() > 0) {
+            if (!Utils.existFile(MAP_PATH + File.separator + nome))
+                System.out.println("Il file "+ nome +" non esiste.\nControlla meglio!\n");
+            else{
                 inport(nome);
-            } else {
-                System.out.println("scrivi il nome del file su cui salvare le rubriche");
-                inport(new Scanner(System.in).next());
+                System.out.println("\nInportato correttamente " + nome);
             }
-            System.out.println("\nInportato correttamente " + nome);
+        } else {
+            System.out.println("scrivi il nome del file su cui salvare le rubriche");
+            nome = new Scanner(System.in).next();
+            if (!Utils.existFile(MAP_PATH + File.separator + nome))
+                System.out.println("Il file "+ nome +" non esiste.\nControlla meglio!\n");
+            else{
+                inport(nome);
+                System.out.println("\nInportato correttamente " + nome);
+            }
         }
     }
 
     public void inport(String nome){
-        String json = MyFile.readFile(File.separator + "Map" + File.separator + nome);
+        String json = Utils.readFile(MAP_PATH + File.separator + nome);
         ArrayList<MapModel> mapList = new ArrayList<>(Arrays.asList(new Gson().fromJson(json, MapModel[].class)));
         for(MapModel i: mapList){
             mapp.put(i.getRuolo(),i.getRubrica());
@@ -270,15 +279,19 @@ public class ActionMap {
     }
 
     public void exportHashmap(String nome){
-        if (MyFile.existFile(File.separator + "Map" + File.separator + nome))
-            MyFile.deleteFile((File.separator + "Map" + File.separator + nome), false, "json");
         if (nome.length() > 0) {
-            inport(nome);
+            if (Utils.existFile(MAP_PATH + File.separator + nome))
+                Utils.deleteFile((MAP_PATH + File.separator + nome), false, "json");
+            export(nome);
+            System.out.println("\nExportato correttamente " + nome);
         } else {
             System.out.println("scrivi il nome del file su cui salvare le rubriche");
-            export(new Scanner(System.in).next());
+            nome = new Scanner(System.in).next();
+            if (Utils.existFile(MAP_PATH + File.separator + nome))
+                Utils.deleteFile((MAP_PATH + File.separator + nome), false, "json");
+            export(nome);
+            System.out.println("\nExportato correttamente " + nome);
         }
-        System.out.println("\nExportato correttamente " + nome);
     }
 
     public void export(String nome){
@@ -286,6 +299,6 @@ public class ActionMap {
         for(Role i: mapp.keySet()){
             mapList.add(new MapModel(new Role(i.getType(),i.getDescription(),i.getUid()),mapp.get(i)));
         }
-        MyFile.writeFile((File.separator + "Map" + File.separator + nome), new Gson().toJson(mapList));
+        Utils.writeFile((MAP_PATH + File.separator + nome), new Gson().toJson(mapList));
     }
 }

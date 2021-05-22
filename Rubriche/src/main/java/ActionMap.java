@@ -103,7 +103,7 @@ public class ActionMap {
                 System.out.println("Contatti:");
                 printRubriche();
                 break;
-            case 8: inportHashmap("");
+            case 8: importHashmap("");
                 break;
             case 9: exportHashmap("");
                 break;
@@ -249,7 +249,7 @@ public class ActionMap {
         mapp.clear();
     }
 
-    public void inportHashmap(String nome){
+    public void importHashmap(String nome){
 
         if (nome.length() > 0) {
             if (!Utils.existFile(MAP_PATH + File.separator + nome))
@@ -280,15 +280,11 @@ public class ActionMap {
 
     public void exportHashmap(String nome){
         if (nome.length() > 0) {
-            if (Utils.existFile(MAP_PATH + File.separator + nome))
-                Utils.deleteFile((MAP_PATH + File.separator + nome), false, "json");
             export(nome);
             System.out.println("\nExportato correttamente " + nome);
         } else {
             System.out.println("scrivi il nome del file su cui salvare le rubriche");
             nome = new Scanner(System.in).next();
-            if (Utils.existFile(MAP_PATH + File.separator + nome))
-                Utils.deleteFile((MAP_PATH + File.separator + nome), false, "json");
             export(nome);
             System.out.println("\nExportato correttamente " + nome);
         }

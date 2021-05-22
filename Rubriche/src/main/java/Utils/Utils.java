@@ -56,6 +56,18 @@ public class Utils {
         }
     }
 
+    public static void writeFileProp(String path, String body){
+        try{
+            File file = new File(path);
+            FileWriter fw = new FileWriter(file);
+            fw.write(body);
+            fw.flush();
+            fw.close();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
     /*public static void deleteFile(String fileNome){
         String path = RESOURCES_PATH + File.separator + fileNome + EXIT_JSON;
         File file = new File(path);

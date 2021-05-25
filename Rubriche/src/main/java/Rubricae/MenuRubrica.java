@@ -105,12 +105,13 @@ public class MenuRubrica {
             if (email.length() <= 0 && tel.length() <= 0)
                 System.out.println("ERRORE\nci deve essere almeno il numero o l'email");
         } while(email.length() <= 0 && tel.length() <= 0);
-        rubrica.addAll(addList(nom,cog,eta,tel,email));
+        Account account = new Account(new User(nom,cog,eta),tel,email);
+        rubrica.addAll(addAccount(account));
     }
 
-    public ArrayList<Account> addList(String n, String c, String a, String e, String t) {
-        ArrayList<Account> app = new ArrayList<Account>();
-        app.add(new Account(new User(n, c, a), e, t));
+    public ArrayList<Account> addAccount(Account account) {
+        ArrayList<Account> app = new ArrayList<>();
+        app.add(account);
         return app;
     }
 
@@ -190,7 +191,7 @@ public class MenuRubrica {
     }
 
     public ArrayList<Account> search(String s, ArrayList<Account> app) {
-        ArrayList<Account> temp = new ArrayList<Account>();
+        ArrayList<Account> temp = new ArrayList<>();
         for(int i = 0;i < getSize(app);i++) {
             if (findIndex(app, s, i)) {
                 temp.add(app.get(i));

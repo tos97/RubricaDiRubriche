@@ -7,9 +7,8 @@ import static Utils.GlobalParameters.*;
 
 public class Utils {
 
-
-    public static boolean existFile(String fileNome){
-        String path = RESOURCES_PATH + File.separator + fileNome + EXIT_JSON;
+    public static boolean existFile(String fileNome, String ext){
+        String path = fileNome + "." + ext;
         File file = new File(path);
         if(!file.exists())
             return false;
@@ -22,6 +21,32 @@ public class Utils {
 
         try{
             reader = new FileReader(RESOURCES_PATH + File.separator + fileNome + EXIT_JSON);
+            int i = 0;
+            while (i != -1){
+                i = reader.read();
+                if (i != -1)
+                    bofyFile = bofyFile + (char) i;
+            }
+        } catch (IOException e){
+            System.out.println("Errore di lettura " + e.getMessage());
+        } finally {
+            if (reader != null){
+                try{
+                    reader.close();
+                } catch (IOException e){
+                    System.out.println("Errore di lettura " + e.getMessage());
+                }
+            }
+        }
+        return bofyFile;
+    }
+
+    public static String readFile(String path, String ext){
+        String bofyFile = "";
+        FileReader reader = null;
+
+        try{
+            reader = new FileReader(path + "." + ext);
             int i = 0;
             while (i != -1){
                 i = reader.read();
@@ -80,7 +105,7 @@ public class Utils {
 
     public static void deleteFile(String nomePath, boolean all, String ext){
         if(all) {
-            String path = RESOURCES_PATH + File.separator + nomePath;
+            String path = nomePath;
             if(ext.length() == 0) {
                 for (File filetmp : new File(path).listFiles()) {
                     if (filetmp.delete())
@@ -102,7 +127,7 @@ public class Utils {
             }
         }
         else{
-            String path = RESOURCES_PATH + File.separator + nomePath + "." + ext;
+            String path = nomePath + "." + ext;
             File file = new File(path);
             if (file.delete())
                 System.out.println("il file "+ path +" è stato cancellato");

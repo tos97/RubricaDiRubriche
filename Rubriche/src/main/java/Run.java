@@ -15,8 +15,8 @@ public class Run {
         int n = 0;
         if (argv.length > 0) {
             gestioneProperties(argv);
-            decodeArgs();
         }
+        decodeArgs();
         do {
             action.opzioni();
             do {
@@ -72,7 +72,7 @@ public class Run {
                 inizio = true;
         }
         if(!inizio)
-            if(Utils.existFile(MAP_PATH + File.separator + "Base"))
+            if(Utils.existFile((RESOURCES_PATH + MAP_PATH + File.separator + "Base"), "json"))
                 action.importHashmap("Base");
     }
 

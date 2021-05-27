@@ -250,7 +250,7 @@ public class MenuRubrica {
         boolean bol;
         do {
             String nome = scan.next();
-            bol = Utils.existFile(RUB_PATH + File.separator + nome);
+            bol = Utils.existFile(RESOURCES_PATH + RUB_PATH + File.separator + nome, "json");
             if (!bol)
                 System.out.println("Il file " + nome + " non esiste.\nControlla meglio!\n");
             else {
@@ -263,8 +263,6 @@ public class MenuRubrica {
     public void exportJsonFile(String nomeRubrica){
         String nome = "backup" + nomeRubrica;
         System.out.println("Il nome del file su cui salvare la rubrica è "+nome);
-        if (Utils.existFile(RUB_PATH + File.separator + nome))
-            Utils.deleteFile((RUB_PATH + File.separator + nome), false, "json");
         Utils.writeFile((RUB_PATH + File.separator + nome),exportJson(nome));
     }
 }

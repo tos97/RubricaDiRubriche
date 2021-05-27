@@ -66,7 +66,7 @@ public class ActionMap {
                             do {
                                 valore = controllo();
                             } while (valore == -1);
-                            ArrayList<Account> array = new ArrayList<Account>();
+                            ArrayList<Account> array = new ArrayList<>();
                             array.addAll(menu.scelta(valore,i.getType()));
                             if (valore == 0) {
                                 mapp.put(i,array);
@@ -133,16 +133,16 @@ public class ActionMap {
                     switch (controllo()) {
                         case 1:
                             System.out.print("scrivi il nome del file da cancellare: ");
-                            Utils.deleteFile((File.separator + path + File.separator + scann.next()), false, "json");
+                            Utils.deleteFile((RESOURCES_PATH + File.separator + path + File.separator + scann.next()), false, "json");
                             bol = true;
                             break;
                         case 2:
-                            Utils.deleteFile((File.separator + path), true, "");
+                            Utils.deleteFile((RESOURCES_PATH + File.separator + path), true, "");
                             bol = true;
                             break;
                         case 3:
                             System.out.print("Inserisci estensione da cancellare: ");
-                            Utils.deleteFile((File.separator + path), true, scann.next());
+                            Utils.deleteFile((RESOURCES_PATH + File.separator + path), true, scann.next());
                             bol = true;
                             break;
                         default:
@@ -252,7 +252,7 @@ public class ActionMap {
     public void importHashmap(String nome){
 
         if (nome.length() > 0) {
-            if (!Utils.existFile(MAP_PATH + File.separator + nome))
+            if (!Utils.existFile(RESOURCES_PATH + MAP_PATH + File.separator + nome, "json"))
                 System.out.println("Il file "+ nome +" non esiste.\nControlla meglio!\n");
             else{
                 inport(nome);
@@ -261,7 +261,7 @@ public class ActionMap {
         } else {
             System.out.println("scrivi il nome del file su cui salvare le rubriche");
             nome = new Scanner(System.in).next();
-            if (!Utils.existFile(MAP_PATH + File.separator + nome))
+            if (!Utils.existFile(RESOURCES_PATH + MAP_PATH + File.separator + nome, "json"))
                 System.out.println("Il file "+ nome +" non esiste.\nControlla meglio!\n");
             else{
                 inport(nome);

@@ -31,6 +31,7 @@ public class TestCrudUtils {
     @ParameterizedTest(name = "File: {0}")
     @DisplayName("File Exist")
     @CsvSource({"Gennaro", "Michele"})
+    @Tag("File")
     void Test_002_Esiste(String arg){
         assertEquals(true, Utils.existFile(LOGS_PATH + File.separator + arg, "log"));
     }
@@ -38,6 +39,7 @@ public class TestCrudUtils {
     @ParameterizedTest(name = "File: {0}")
     @DisplayName("Read File")
     @CsvSource({"Gennaro", "Michele"})
+    @Tag("File")
     void Test_003_Leggi(String arg){
         assertEquals(testo, Utils.readFile(LOGS_PATH + File.separator + arg, "log"));
     }
@@ -45,6 +47,7 @@ public class TestCrudUtils {
     @ParameterizedTest(name = "File: {0}")
     @DisplayName("Cancella File")
     @CsvSource({"Gennaro", "Michele"})
+    @Tag("File")
     void Test_004_Delete(String arg){
         Utils.deleteFile(LOGS_PATH + File.separator + arg, false,"log");
     }

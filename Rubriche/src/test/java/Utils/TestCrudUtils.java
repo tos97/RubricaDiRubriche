@@ -3,10 +3,12 @@ package Utils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import static org.junit.Assert.*;
 
 import java.io.File;
 
 import static Utils.GlobalParameters.*;
+import static org.junit.Assert.assertEquals;
 
 public class TestCrudUtils {
 
@@ -21,6 +23,7 @@ public class TestCrudUtils {
     @ParameterizedTest(name = "File: {0}")
     @DisplayName("Write File")
     @CsvSource({"Gennaro", "Michele"})
+    @Tag("File")
     void Test_001_Write(String arg){
         Utils.writeFileProp(LOGS_PATH + File.separator + arg + ".log", testo);
     }
@@ -29,14 +32,14 @@ public class TestCrudUtils {
     @DisplayName("File Exist")
     @CsvSource({"Gennaro", "Michele"})
     void Test_002_Esiste(String arg){
-        Utils.existFile(LOGS_PATH + File.separator + arg, "log");
+        assertEquals(true, Utils.existFile(LOGS_PATH + File.separator + arg, "log"));
     }
 
     @ParameterizedTest(name = "File: {0}")
     @DisplayName("Read File")
     @CsvSource({"Gennaro", "Michele"})
     void Test_003_Leggi(String arg){
-        System.out.println(Utils.readFile(LOGS_PATH + File.separator + arg, "log") + "\n");
+        assertEquals(testo, Utils.readFile(LOGS_PATH + File.separator + arg, "log"));
     }
 
     @ParameterizedTest(name = "File: {0}")

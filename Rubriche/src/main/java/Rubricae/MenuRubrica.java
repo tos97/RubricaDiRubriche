@@ -132,10 +132,10 @@ public class MenuRubrica {
             canc(s);
         }
         if (getSize(temp) == 1) {
-            System.out.println("vuoi cancellare questo elemento (y o n):");
-            printArray(temp);
-            char r = scan.next().charAt(0);
-            if(r == 'y')
+            //System.out.println("vuoi cancellare questo elemento (y o n):");
+            //printArray(temp);
+            //char r = scan.next().charAt(0);
+            //if(r == 'y')
                 for(int i = 0;i < getSize(rubrica);i++) {
                     if (findIndex(rubrica, s, i))
                         rubrica.remove(i);
@@ -233,7 +233,11 @@ public class MenuRubrica {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Inserisci il json da salvare:");
         String json = scanner.next();
-        rubrica.addAll(Arrays.asList(new Gson().fromJson(json, Account[].class)));
+        rubrica.addAll(Arrays.asList(importJ(json)));
+    }
+
+    public Account[] importJ(String jj){
+        return new Gson().fromJson(jj, Account[].class);
     }
 
     public void exportJson(){
@@ -241,7 +245,7 @@ public class MenuRubrica {
     }
 
     public String exportJson(String nome){
-        return new Gson().toJson(rubrica).toString();
+        return new Gson().toJson(rubrica);
     }
 
     public void importJsonFile() {

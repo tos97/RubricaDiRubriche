@@ -1,3 +1,5 @@
+package Units;
+
 import Models.Account;
 import Models.User;
 import Rubricae.MenuRubrica;
@@ -7,6 +9,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class TestCrudRubrica {
 
     private static Account pippo;

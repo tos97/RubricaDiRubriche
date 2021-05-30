@@ -68,7 +68,7 @@ public class Utils {
     }
 
     public static void writeFile(String fileNome, String body){
-        String path = RESOURCES_PATH + File.separator + fileNome + EXIT_JSON;
+        String path = RESOURCES_PATH + fileNome + EXIT_JSON;
 
         try{
             File file = new File(path);

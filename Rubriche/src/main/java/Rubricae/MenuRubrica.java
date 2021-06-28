@@ -200,6 +200,15 @@ public class MenuRubrica {
         return temp;
     }
 
+    public Boolean searchBoolean(String s, ArrayList<Account> app) {
+        for(int i = 0;i < getSize(app);i++) {
+            if (findIndex(app, s, i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean findIndex(ArrayList<Account> app, String s, int i) {
         boolean n,c,a,u,t,e;
         n = app.get(i).getUser().getNome().contains(s);
